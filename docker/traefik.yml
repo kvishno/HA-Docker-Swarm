@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:v2.1.6
+    command:
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=traefik-public"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--api.insecure"
+      - "--providers.file.directory=/config"
+      - "--providers.file.watch=true"
+    ports:    
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Mount config file and certs
+      - ./config:/config:ro
+      - ./certs:/certs:ro
+    networks:
+      outside-world:
+      internal-network:
+
+    deploy:
+      # Deploy Traefik to all manager nodes
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+
+# Networks for Traefik to use
+networks:
+  internal-network:
+    internal: true
+  outside-world:
