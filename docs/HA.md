@@ -1,5 +1,5 @@
 # HA cluster
-![Image of HA](https://github.com/kvishno/H5/raw/master/images/HA.png)
+![Image of HA](./images/HA.png)
 
 ## Index  
   * [Configuration files](#configuration-files)
