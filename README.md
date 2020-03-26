@@ -6,3 +6,4 @@ This repo will contain various guides to install a HA Docker Swarm cluster
 
 1. [HA - Keepalived & HAProxy](./docs/HA.md)
 2. [Docker (Swarm)](./docs/swarm.md)
+3. [Traefik with self signed cert](./docs/traefik.md)
