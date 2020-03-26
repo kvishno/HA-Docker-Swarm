@@ -1,5 +1,5 @@
 # Docker Swarm
-![Image of Docker Swarm](https://github.com/kvishno/H5/raw/master/images/DockerSwarm.png)
+![Image of Docker Swarm](../images/DockerSwarm.png)
 
 ## Index  
   * [Configuration files](#configuration-files)
