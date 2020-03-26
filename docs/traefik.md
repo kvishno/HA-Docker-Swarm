@@ -1,6 +1,6 @@
 # Traefik
 
-![An Example of a Traefik setup in Docker Swarm](https://github.com/kvishno/H5/raw/master/images/traefik_swarm.png)
+![An Example of a Traefik setup in Docker Swarm](../images/traefik_swarm.png)
 
 ## Index  
   * [Configuration files](#configuration-files)
