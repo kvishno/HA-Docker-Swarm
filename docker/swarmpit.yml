@@ -1,0 +1,94 @@
+version: '3.3'
+# https://github.com/swarmpit/swarmpit/blob/master/docker-compose.yml
+
+services:
+  app:
+    image: swarmpit/swarmpit:latest
+    environment:
+      - SWARMPIT_DB=http://db:5984
+      - SWARMPIT_INFLUXDB=http://influxdb:8086
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - traefik_outside-world
+      - traefik_internal-network
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1024M
+        reservations:
+          cpus: '0.25'
+          memory: 512M
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.middlewares.swarmpit-redirect-websecure.redirectscheme.scheme=https
+        - traefik.http.routers.swarmpit-web.middlewares=swarmpit-redirect-websecure
+        - traefik.http.routers.swarmpit-web.rule=Host(`swarmpit.example.com`)
+        - traefik.http.routers.swarmpit-web.entrypoints=web
+        - traefik.http.routers.swarmpit-websecure.rule=Host(`swarmpit.example.com`)
+        - traefik.http.routers.swarmpit-websecure.tls=true
+        - traefik.http.routers.swarmpit-websecure.entrypoints=websecure
+        - traefik.http.services.swarmpit-websecure.loadbalancer.server.port=8080
+
+  db:
+    image: couchdb:2.3.0
+    volumes:
+      - db-data:/opt/couchdb/data
+    deploy:
+      resources:
+        limits:
+          cpus: '0.30'
+          memory: 256M
+        reservations:
+          cpus: '0.15'
+          memory: 128M
+
+  influxdb:
+    image: influxdb:1.7
+    volumes:
+      - influx-data:/var/lib/influxdb
+    deploy:
+      resources:
+        limits:
+          cpus: '0.60'
+          memory: 512M
+        reservations:
+          cpus: '0.30'
+          memory: 128M
+
+  agent:
+    image: swarmpit/agent:latest
+    environment:
+      - DOCKER_API_VERSION=1.35
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    deploy:
+      mode: global
+      labels:
+        swarmpit.agent: 'true'
+      resources:
+        limits:
+          cpus: '0.10'
+          memory: 64M
+        reservations:
+          cpus: '0.05'
+          memory: 32M
+
+networks:
+  traefik_outside-world:
+    external: true
+  traefik_internal-network:
+    external: true
+  default:
+    external:
+      name: traefik_internal-network
+
+volumes:
+  db-data:
+    driver: local
+  influx-data:
+    driver: local
