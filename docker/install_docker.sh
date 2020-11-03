@@ -5,15 +5,15 @@
 
 # User credentials for docker user
 user=dockeradmin
-password=supersecret
+password=SuperSecret!
 
 # Compose version. Find the latest release here: https://github.com/docker/compose/releases/latest
-compose=1.25.4
+compose=1.27.4
 
 
 # Create new docker user
 sudo adduser $user --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
-echo "$USER:$password" | sudo chpasswd
+echo "$user:$password" | sudo chpasswd
 
 # Install Docker
 sudo apt update

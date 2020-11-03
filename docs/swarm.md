@@ -28,7 +28,7 @@
 
 #### Set hostname 
 ```
-sudo sed -i 's/.*/Docker01/' /etc/hostname
+hostnamectl set-hostname DOCKER01
 ```
 Reboot is required after changing the hostname.
 
@@ -64,15 +64,15 @@ Reload UFW: `ufw reload`
 
 ### Docker install
 
-To install Docker + Docker Compose, run the script <a href="../docker/install_docker.sh">install_docker.sh</a>. Customize for your own needs. It will as default create a user for docker called `dockeradmin` with the password `supersecret`
+To install Docker + Docker Compose, run the script <a href="../docker/install_docker.sh">install_docker.sh</a>. Customize for your own needs. It will as default create a user for docker called `dockeradmin` with the password `SuperSecret!`
 
 
 Add the hosts that are part of the swarm, to the hostfile on all hosts:
 ```
-sudo sed -i '$a 10.192.0.41 docker01' /etc/hosts
-sudo sed -i '$a 10.192.0.42 docker02' /etc/hosts
-sudo sed -i '$a 10.192.0.43 docker03' /etc/hosts
-sudo sed -i '$a 10.192.0.44 docker04' /etc/hosts
+sudo sed -i '$a 10.192.0.41 DOCKER01' /etc/hosts
+sudo sed -i '$a 10.192.0.42 DOCKER02' /etc/hosts
+sudo sed -i '$a 10.192.0.43 DOCKER03' /etc/hosts
+sudo sed -i '$a 10.192.0.44 DOCKER04' /etc/hosts
 ```
 
 Initialise the swarm manager:

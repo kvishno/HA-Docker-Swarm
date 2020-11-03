@@ -1,6 +1,8 @@
 # HA Docker Swarm
 
-This repo will contain various guides to install a HA Docker Swarm cluster
+This repo will contain guides to install a HA Docker Swarm cluster
+
+![Image of HA Docker](../images/web_server_ha.png)
 
 ## Index
 

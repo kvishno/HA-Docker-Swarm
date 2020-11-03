@@ -34,7 +34,7 @@
 
 #### Set hostname 
 ```
-sudo sed -i 's/.*/HA01/' /etc/hostname
+hostnamectl set-hostname HA01
 ```
 Reboot is required after changing the hostname.
 
