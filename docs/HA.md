@@ -102,7 +102,7 @@ sudo apt-get install haproxy -y
 
 Add following to `/etc/sysctl.conf`:
 ```
-Net.ipv4.ip_nonlocal_bind=1
+net.ipv4.ip_nonlocal_bind=1
 ```
 
 Apply settings: `sysctl -p`
